@@ -68,6 +68,9 @@ type GenSchema struct {
 	DiscriminatorValue      string
 	Discriminates           map[string]string
 	Parents                 []string
+	JSONOut                 string
+	JSONIn                  string
+	ZeroValue               string
 }
 
 type sharedValidations struct {
