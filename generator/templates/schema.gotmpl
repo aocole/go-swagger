@@ -93,7 +93,7 @@ func ({{$.ReceiverName}} *{{ pascalize $.Name}}) Set{{ pascalize .Name}}(val {{ 
 {{ pascalize .AdditionalProperties.Name }}() map[string]{{ template "schemaType" .AdditionalProperties }}{{end}}{{ end }}
 {{ if .AdditionalItems }}/* {{ template "docstring" .AdditionalItems }}{{ template "propertyValidationDocString" .AdditionalItems}} */
 {{ pascalize .AdditionalItems.Name }}() []{{ template "schemaType" .AdditionalItems }}
-{{ end }}{{ end }}{{ template "schemaSerializer" . }}{{if and (not .IsInterface) (not .IsBaseType) (or .Required .HasValidations .HasBaseType) }}
+{{ end }}{{ end }}{{ template "modelSerializer" . }}{{if and (not .IsInterface) (not .IsBaseType) (or .Required .HasValidations .HasBaseType) }}
 {{ template "schemavalidator" . }}
 {{ else if gt (len .AllOf) 0 }}
 {{ template "schemavalidator" . }}
