@@ -238,11 +238,11 @@ func makeGenDefinitionHierarchy(name, pkg, container string, schema spec.Schema,
 		}
 	}
 
-	var defaultImports []string
+	var defaultImports map[string]string
 	if pg.GenSchema.HasValidations {
-		defaultImports = []string{
-			"github.com/go-openapi/runtime",
-			"github.com/go-openapi/validate",
+		defaultImports = map[string]string{
+			"runtime":  "github.com/go-openapi/runtime",
+			"validate": "github.com/go-openapi/validate",
 		}
 	}
 	var extras []GenSchema
@@ -255,13 +255,15 @@ func makeGenDefinitionHierarchy(name, pkg, container string, schema spec.Schema,
 		extras = append(extras, pg.ExtraSchemas[k])
 	}
 
-	return &GenDefinition{
+	gd := &GenDefinition{
 		Package:        mangleName(filepath.Base(pkg), "definitions"),
 		GenSchema:      pg.GenSchema,
 		DependsOn:      pg.Dependencies,
 		DefaultImports: defaultImports,
 		ExtraSchemas:   extras,
-	}, nil
+	}
+
+	return gd, nil
 }
 
 type schemaGenContext struct {
@@ -1183,6 +1185,7 @@ func (sg *schemaGenContext) makeGenSchema() error {
 	sg.GenSchema.ReceiverName = sg.Receiver
 	sg.GenSchema.sharedValidations = sg.schemaValidations()
 	sg.GenSchema.ReadOnly = sg.Schema.ReadOnly
+	sg.GenSchema.Default = sg.Schema.Default
 
 	var err error
 	returns, err := sg.shortCircuitNamedRef()

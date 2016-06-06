@@ -15,7 +15,7 @@ type GenDefinition struct {
 	GenSchema
 	Package          string
 	Imports          map[string]string
-	DefaultImports   []string
+	DefaultImports   map[string]string
 	ExtraSchemas     []GenSchema
 	DependsOn        []string
 	IncludeValidator bool
@@ -73,6 +73,7 @@ type GenSchema struct {
 	JSONIn                  string
 	ZeroValue               string
 	PropLen                 int
+	Default                 interface{}
 }
 
 type sharedValidations struct {
@@ -115,7 +116,7 @@ type GenResponse struct {
 	AllowsForStreaming bool
 
 	Imports        map[string]string
-	DefaultImports []string
+	DefaultImports map[string]string
 }
 
 // GenHeader represents a header on a response for code generation
@@ -241,7 +242,7 @@ type GenOperationGroup struct {
 	Summary        string
 	Description    string
 	Imports        map[string]string
-	DefaultImports []string
+	DefaultImports map[string]string
 	RootPackage    string
 	WithContext    bool
 }
@@ -313,7 +314,7 @@ type GenOperation struct {
 	RootPackage  string
 
 	Imports        map[string]string
-	DefaultImports []string
+	DefaultImports map[string]string
 	ExtraSchemas   []GenSchema
 
 	Authorized bool
@@ -379,7 +380,7 @@ type GenApp struct {
 	Info                *spec.Info
 	ExternalDocs        *spec.ExternalDocumentation
 	Imports             map[string]string
-	DefaultImports      []string
+	DefaultImports      map[string]string
 	Schemes             []string
 	ExtraSchemes        []string
 	Consumes            []GenSerGroup
